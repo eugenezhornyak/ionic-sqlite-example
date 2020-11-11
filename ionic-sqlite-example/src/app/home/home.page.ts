@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Product } from '../core/models/product';
+import { ProductsRepositoryService } from '../core/services/products.repository.service';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +9,15 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  public products: Promise<Array<Product>>;
 
+  constructor(
+    private productsRepository: ProductsRepositoryService
+  ) {
+    this.refreshData();
+  }
+
+  private refreshData() {
+    this.products = this.productsRepository.readAll();
+  }
 }
